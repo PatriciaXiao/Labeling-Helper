@@ -65,7 +65,7 @@ def get_db():
     return db
 
 def get_value_from_db():
-    cur = get_db().execute("SELECT * FROM debug WHERE val2 > 5")
+    cur = get_db().execute("SELECT * FROM debug WHERE val2 < 5")
     rv = cur.fetchall()
     print(rv)
 
@@ -75,4 +75,6 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+if __name__ == "__main__":
+    app.run(debug=True)
 
