@@ -1,3 +1,6 @@
+# https://flask.palletsprojects.com/en/2.0.x/quickstart/
+# https://flask.palletsprojects.com/en/2.0.x/installation/
+
 from flask import Flask
 
 app = Flask(__name__)
