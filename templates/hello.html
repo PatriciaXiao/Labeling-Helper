@@ -6,7 +6,18 @@
   <h1>Hello, World!</h1>
 {% endif %}
 
+{% if option %}
+  <h1>You selected {{ option }}!</h1>
+{% else %}
+  <h1>You haven't selected anything</h1>
+{% endif %}
+
 <form method="POST">
   <div><label>username: <input type="text" name="username"></label></div>
+  <select id="options" name="option">
+    <option value="opt1">option1</option>
+    <option value="opt2" selected>option2</option>
+    <option value="opt3">option3</option>
+  </select>
   <input type="submit" value="Submit">
 </form>

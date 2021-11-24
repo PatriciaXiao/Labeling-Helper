@@ -26,7 +26,7 @@ def login():
     if request.method == 'POST':
         if len(request.form.get('username')) > 0:
             name = request.form.get('username')
-            return render_template('hello.html', name=name, error=error)
+            return render_template('hello.html', name=name, option=request.form.get('option'))
         else:
             error = 'Invalid username'
     # the code below is executed if the request method
