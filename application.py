@@ -15,6 +15,7 @@ app = Flask(__name__)
 @app.route('/index/', methods=['POST', 'GET'])
 def showpage():
 
+
     if not os.path.exists(DATABASE):
         init_db()
     else:
@@ -38,7 +39,7 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-    # from sqlite3 console: .import selected_subset.csv database
+    # from sqlite3 console: .mode csv and then .import selected_subset.csv tweets
 
 
 def get_db():
