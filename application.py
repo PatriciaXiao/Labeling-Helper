@@ -106,7 +106,8 @@ def debug_db():
 
 def execute_db(command):
     print(command)
-    cur = get_db().execute(command)
+    db = get_db()
+    cur = db.execute(command)
     results = cur.fetchall()
     db.commit()
     return results
