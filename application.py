@@ -20,4 +20,4 @@ def showpage():
     else:
         predicted_value = "Not yet"
     print(content, keyword, predicted_value)
-    return render_template('showpage.html', content=content, keyword=keyword)
+    return render_template('showpage.html', content_list=[content, content], keyword=keyword)
