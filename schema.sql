@@ -1,7 +1,7 @@
 CREATE TABLE tweets(
-    index INT PRIMARY KEY,
+    idx INT PRIMARY KEY,
     twitter_id INT,
-    tweet_content VARCHAR(1000),
+    tweet_content TEXT,
     obama_cnt INT,
     obama_score REAL,
     trump_cnt INT,

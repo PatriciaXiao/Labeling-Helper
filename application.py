@@ -38,7 +38,7 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-    # os.system(".import selected_subset.csv database")
+    # from sqlite3 console: .import selected_subset.csv database
 
 
 def get_db():
