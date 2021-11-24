@@ -4,14 +4,20 @@ CREATE TABLE tweets(
     tweet_content TEXT,
     obama_cnt INT,
     obama_score REAL,
+    obama_valid INT,
     trump_cnt INT,
     trump_score REAL,
+    trump_valid INT,
     obamacare_cnt INT,
     obamacare_score REAL,
+    obamacare_valid INT,
     trumpcare_cnt INT,
     trumpcare_score REAL,
+    trumpcare_valid INT,
     republican_cnt INT,
     republican_score REAL,
+    republican_valid INT,
     democrats_cnt INT,
-    democrats_score REAL
+    democrats_score REAL,
+    democrats_valid INT
 );
