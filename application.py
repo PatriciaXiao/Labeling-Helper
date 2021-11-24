@@ -16,21 +16,30 @@ app = Flask(__name__)
 @app.route('/index/', methods=['POST', 'GET'])
 def showpage():
 
+    content_list = list()
+    keyword = ""
+
     if not os.path.exists(DATABASE):
         init_db()
     else:
-        # account, keyword = select_next_account()
-        # get_all_tweets_of(account, keyword)
-        pass
+        account, keyword = select_next_account()
+        tweets = get_all_tweets_of(account, keyword)
 
-    content = "hello <b>world</b>"
-    keyword = "world"
+        for t in tweets:
+            tokens = t.split()
+            for i,tk in enumerate(tokens):
+                if tk.lower().find(keyword) >= 0:
+                    tokens[i] = "<b>{}</b>".format(tk)
+            content_list.append(" ".join(tokens))
+
+
+    # content = "hello <b>world</b>"
+    # keyword = "world"
     if request.method == 'POST':
         predicted_value = request.form.get('positive_negative_mention', None)
     else:
         predicted_value = None
-    print(content, keyword, predicted_value)
-    return render_template('showpage.html', content_list=[content, content], keyword=keyword)
+    return render_template('showpage.html', content_list=content_list, keyword=keyword)
 
 
 def init_db():
@@ -59,9 +68,10 @@ def select_next_account():
     return account, keyword
 
 def get_all_tweets_of(account, keyword):
+    # command = "SELECT * from tweets WHERE twitter_id = {0};".format(account)
     command = "SELECT * from tweets WHERE twitter_id = {0} AND {1}_valid = 1;".format(account, keyword)
     tweets = execute_db(command)
-    print(tweets)
+    return tweets
 
 def debug_db():
     print(execute_db("SELECT * from tweets;"))
