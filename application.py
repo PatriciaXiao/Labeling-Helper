@@ -19,8 +19,9 @@ def showpage():
     if not os.path.exists(DATABASE):
         init_db()
     else:
-        account, keyword = select_next_account()
-        get_all_tweets_of(account, keyword)
+        # account, keyword = select_next_account()
+        # get_all_tweets_of(account, keyword)
+        pass
 
     content = "hello <b>world</b>"
     keyword = "world"

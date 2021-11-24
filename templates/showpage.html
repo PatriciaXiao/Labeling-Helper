@@ -12,11 +12,11 @@
   </ul>
   <form method="POST">
   <div><label>Do you think the mention of <b>{{keyword}}</b> in this context is positive, or negative? (NOTE: negative only when these posts show clear tendency against <b>{{keyword}}</b>) </label></div>
-  <select id="pos_neg" name="positive_negative_mention">
-    <option value="0" selected></option>
-    <option value="1">positive</option>
-    <option value="-1">negative</option>
-  </select>
+  <br>
+    <input type="radio" name="positive_negative_mention" value="1">positive<br>
+    <input type="radio" name="positive_negative_mention" value="-1">negative<br>
+    <br>
+    <br>
   <input type="submit" value="Submit">
 </form>
 </body>
