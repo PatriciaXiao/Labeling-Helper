@@ -16,6 +16,7 @@ def hello_world():
 
 from flask import render_template
 
+# https://stackoverflow.com/questions/45124603/how-to-tell-which-html-form-was-submitted-to-flask
 @app.route('/hello/')
 @app.route('/hello/<name>')
 def hello(name=None):
