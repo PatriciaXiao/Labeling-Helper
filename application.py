@@ -78,7 +78,7 @@ def init_db():
 
 def insert_db(account, keyword, predicted_value):
     # UPDATE tweets SET obama_cnt = obama_cnt + 1, obama_score = (obama_score  * obama_cnt +(-1))/(obama_cnt + 1.0) where twitter_id = 237348797;
-    command = "UPDATE tweets SET {0}_cnt = {0}_cnt + 1, {0}_score = ( {0}_cnt * {0}_score + ({1})) / ({0}_cnt + 1.0) WHERE twitter_id = {2}".format(keyword, predicted_value, account)
+    command = "UPDATE tweets SET {0}_cnt = {0}_cnt + 1, {0}_score = ( {0}_cnt * {0}_score + ({1})) / ({0}_cnt + 1.0) WHERE twitter_id = {2} AND {0}_valid = 1;".format(keyword, predicted_value, account)
     execute_db(command)
 
 def get_db():
