@@ -108,6 +108,7 @@ def execute_db(command):
     print(command)
     cur = get_db().execute(command)
     results = cur.fetchall()
+    db.commit()
     return results
 
 @app.teardown_appcontext
