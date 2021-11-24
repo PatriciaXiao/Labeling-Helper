@@ -26,7 +26,7 @@ def showpage():
         tweets = get_all_tweets_of(account, keyword)
 
         for t in tweets:
-            tokens = t.split()
+            tokens = t[2].split()
             for i,tk in enumerate(tokens):
                 if tk.lower().find(keyword) >= 0:
                     tokens[i] = "<b>{}</b>".format(tk)
@@ -37,6 +37,10 @@ def showpage():
     # keyword = "world"
     if request.method == 'POST':
         predicted_value = request.form.get('positive_negative_mention', None)
+        form.positive_negative_mention.data = ""
+        # ["-1", "0", "1"]
+        if predicted_value in ["-1", "0", "1"]:
+            insert_db(account, keyword, predicted_value)
     else:
         predicted_value = None
     return render_template('showpage.html', content_list=content_list, keyword=keyword)
@@ -52,6 +56,10 @@ def init_db():
 
     # from sqlite3 console: .mode csv and then .import selected_subset.csv tweets
 
+def insert_db(account, keyword, predicted_value):
+    # UPDATE tweets SET obama_cnt = obama_cnt + 1, obama_score = (obama_score  * obama_cnt +(-1))/(obama_cnt + 1.0) where twitter_id = 237348797;
+    command = "UPDATE tweets SET {0}_cnt = {0}_cnt + 1, {0}_score = ( {0}_cnt * {0}_score + ({1}) / ({0}_cnt + 1.0) WHERE twitter_id = {2}".format(keyword, predicted_value, account)
+    execute_db(command)
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -63,7 +71,7 @@ def select_next_account():
     key_words_samples = ["obama", "trump", "obamacare", "trumpcare", "republican", "democrats"]
     keyword = random.choice(key_words_samples)
     # command = "SELECT * from tweets WHERE {0}_cnt = (SELECT MIN({0}_cnt) FROM tweets);".format(keyword)
-    command = "SELECT * from tweets WHERE {0}_valid = 1 AND {0}_cnt = (SELECT MIN({0}_cnt) FROM tweets;".format(keyword)
+    command = "SELECT * from tweets WHERE ({0}_valid = 1) AND ({0}_cnt = (SELECT MIN({0}_cnt) FROM tweets));".format(keyword)
     account = random.choice(execute_db(command))[1]
     return account, keyword
 
@@ -77,6 +85,7 @@ def debug_db():
     print(execute_db("SELECT * from tweets;"))
 
 def execute_db(command):
+    print(command)
     cur = get_db().execute(command)
     results = cur.fetchall()
     return results
