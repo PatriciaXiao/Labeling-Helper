@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import sqlite3
 from flask import g
 
@@ -11,14 +11,13 @@ raw_file = "selected_subset.csv"
 # export FLASK_APP=application
 
 app = Flask(__name__)
+app.secret_key = "secret_key_for_session_use"
 
 @app.route('/', methods=['POST', 'GET'])
-@app.route('/index/', methods=['POST', 'GET'])
+@app.route('/labeling/', methods=['POST', 'GET'])
 def showpage():
 
-    content_list = list()
-    keyword = ""
-
+    """
     if not os.path.exists(DATABASE):
         init_db()
     else:
@@ -31,18 +30,39 @@ def showpage():
                 if tk.lower().find(keyword) >= 0:
                     tokens[i] = "<b>{}</b>".format(tk)
             content_list.append(" ".join(tokens))
+    """
 
 
     # content = "hello <b>world</b>"
     # keyword = "world"
     if request.method == 'POST':
         predicted_value = request.form.get('positive_negative_mention', None)
-        form.positive_negative_mention.data = ""
         # ["-1", "0", "1"]
         if predicted_value in ["-1", "0", "1"]:
+            account = session["account"]
+            keyword = session["keyword"]
             insert_db(account, keyword, predicted_value)
+            return redirect(url_for('showpage'))
     else:
-        predicted_value = None
+
+        content_list = list()
+        keyword = ""
+        if not os.path.exists(DATABASE):
+            init_db()
+        else:
+            account, keyword = select_next_account()
+            tweets = get_all_tweets_of(account, keyword)
+
+            for t in tweets:
+                tokens = t[2].split()
+                for i,tk in enumerate(tokens):
+                    if tk.lower().find(keyword) >= 0:
+                        tokens[i] = "<b>{}</b>".format(tk)
+                content_list.append(" ".join(tokens))
+
+            session["account"] = account
+            session["keyword"] = keyword
+
     return render_template('showpage.html', content_list=content_list, keyword=keyword)
 
 
@@ -58,7 +78,7 @@ def init_db():
 
 def insert_db(account, keyword, predicted_value):
     # UPDATE tweets SET obama_cnt = obama_cnt + 1, obama_score = (obama_score  * obama_cnt +(-1))/(obama_cnt + 1.0) where twitter_id = 237348797;
-    command = "UPDATE tweets SET {0}_cnt = {0}_cnt + 1, {0}_score = ( {0}_cnt * {0}_score + ({1}) / ({0}_cnt + 1.0) WHERE twitter_id = {2}".format(keyword, predicted_value, account)
+    command = "UPDATE tweets SET {0}_cnt = {0}_cnt + 1, {0}_score = ( {0}_cnt * {0}_score + ({1})) / ({0}_cnt + 1.0) WHERE twitter_id = {2}".format(keyword, predicted_value, account)
     execute_db(command)
 
 def get_db():
