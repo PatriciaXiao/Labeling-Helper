@@ -28,6 +28,8 @@ def login():
     error = None
     if not os.path.exists(DATABASE):
         init_db()
+    else:
+        get_value_from_db()
     if request.method == 'POST':
         if len(request.form.get('username')) > 0:
             name = request.form.get('username')
@@ -60,6 +62,11 @@ def get_db():
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
     return db
+
+def get_value_from_db():
+    cur = get_db().execute("SELECT * FROM debug WHERE val2 > 5")
+    rv = cur.fetchall()
+    print(rv)
 
 @app.teardown_appcontext
 def close_connection(exception):
