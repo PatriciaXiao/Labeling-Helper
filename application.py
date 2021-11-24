@@ -1,4 +1,8 @@
 from flask import Flask, render_template, request
+import sqlite3
+from flask import g
+
+DATABASE = 'database.db'
 
 # export FLASK_APP=application
 
