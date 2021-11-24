@@ -11,7 +11,5 @@ CREATE TABLE tweets(
     trumpcare_cnt INT,
     trumpcare_score REAL,
     republican_cnt INT,
-    republican_score REAL
-    democrats_cnt INT,
     democrats_score REAL
 );
