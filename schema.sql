@@ -1,5 +1,5 @@
 CREATE TABLE tweets(
-    idx INT PRIMARY KEY,
+    idx INT,
     twitter_id INT,
     tweet_content TEXT,
     obama_cnt INT,
@@ -11,5 +11,7 @@ CREATE TABLE tweets(
     trumpcare_cnt INT,
     trumpcare_score REAL,
     republican_cnt INT,
+    republican_score REAL,
+    democrats_cnt INT,
     democrats_score REAL
 );
