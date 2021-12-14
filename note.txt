@@ -1,2 +1,11 @@
-instruction
+https://www.sqlitetutorial.net/sqlite-tutorial/sqlite-export-csv/
+
+patriciaxiao@s-169-232-190-68 Labeling-Helper % sqlite3 database.db
+SQLite version 3.32.3 2020-06-18 14:16:19
+Enter ".help" for usage hints.
+sqlite> .mode csv
+sqlite> .output label.csv
+sqlite> select * from tweets
+   ...> ;
+sqlite> 
 
