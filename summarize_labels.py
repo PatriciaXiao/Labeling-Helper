@@ -6,5 +6,9 @@ entities = ["obama","trump","obamacare","trumpcare","republican","democrats"]
 
 df = pd.read_csv(ifile)
 
-print(df)
+for e in entities:
+    count = e + "_cnt"
+    score = e + "_score"
+    valid = e + "_valid"
+    
 
