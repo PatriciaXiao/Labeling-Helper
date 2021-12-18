@@ -4,3 +4,5 @@ ifile = "label.csv"
 
 df = pd.read_csv(ifile)
 
+print(df)
+
