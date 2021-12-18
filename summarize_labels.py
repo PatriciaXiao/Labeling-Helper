@@ -1,2 +1,6 @@
 import pandas as pd
-import torch
+
+ifile = "label.csv"
+
+df = pd.read_csv(ifile)
+
